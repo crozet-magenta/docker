@@ -41,7 +41,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: public.ecr.aws/e1p2r1f0/moco:latest
+          tags: public.ecr.aws/crozet/moco:latest,public.ecr.aws/crozet/moco:${{ env.TAG }}
       -
         name: Commit file
         if: env.EXIT == 'false'
