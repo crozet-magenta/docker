@@ -7,7 +7,7 @@ if [ "$lastTag" != "$currentTag" ]
 then
   echo "Current tag $currentTag is different than last built tag $lastTag => continue build"
   echo "$currentTag" > tag
-  echo "TAG=$currentTag"
+  echo "TAG=$currentTag" >> $GITHUB_ENV
   echo "EXIT=false" >> $GITHUB_ENV
 else
   echo "Current tag $currentTag is the same as last built tag $lastTag => exit build"
