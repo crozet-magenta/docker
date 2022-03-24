@@ -42,6 +42,18 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: public.ecr.aws/crozet/moco:latest,public.ecr.aws/crozet/moco:${{ env.TAG }}
+      - 
+        name: Tag release
+        if: env.EXIT == 'false'
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ env.TAG }}',
+              sha: context.sha
+            })
       -
         name: Commit file
         if: env.EXIT == 'false'
@@ -50,10 +62,3 @@ jobs:
           file-path: tag
           commit-msg: Update tag
           github-token: ${{ secrets.GH_TOKEN }}
-      - 
-        name: Tag release
-        if: env.EXIT == 'false'
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: ${{ env.tag }}
-          message: Version ${{ env.tag }}
